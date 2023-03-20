@@ -5,12 +5,9 @@ import pandas as pd
 import logging
 import matplotlib.pyplot as plt
 
-from numpy import ndarray
-
-
 class NanonisLongTermDataToFFT:
     # Configure the logging level
-    logging.basicConfig(level=logging.DEBUG)  # Change this to logging.INFO or DEBUG to hide debug messages
+    logging.basicConfig(level=logging.INFO)  # Change this to logging.INFO or DEBUG to hide debug messages
 
     def __init__(self, fname: str):
         self.fname = fname
@@ -20,7 +17,7 @@ class NanonisLongTermDataToFFT:
         self._raw_file = None
 
     def get_file(self):
-        self._raw_file = pd.read_csv(self.fname, sep=self.separator, decimal=self.decimal)
+        self._raw_file = pd.read_csv(self.fname, sep=self.separator, decimal=self.decimal,  on_bad_lines='skip')
         logging.debug(f"\n raw_pandas_file: \n"
                       f"{self._raw_file}")
         return self._raw_file
@@ -151,3 +148,4 @@ if __name__ == "__main__":
     # header = file.get_header()
     # var = print(type(file.end_of_header_start_data_index))
     # file.get_header()
+

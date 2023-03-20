@@ -82,18 +82,12 @@ def fft_signal(array_2D, slope, intercept):
     return freqency, power, time, signal, linear_function, signal_minus_slope
 
 
-def plot_graph():
+def plot_graph(frequency, power, time, signal, linear_function, signal_minus_slope):
     # Check if running in debug mode
     fig, (ax1, ax2, ax3, ax4) = plt.subplots(nrows=4, ncols=1)
 
     if __debug__:
         # Plot on the first subplot
-        ax4.plot(frequency, power)
-        ax4.set_title('Sine Function')
-        ax4.set_xlabel('Frequency (Hz)')
-        ax4.set_ylabel('Amplitude (nm)')
-        ax4.grid()
-
         # Plot on the second subplot
         ax1.plot(time, signal)
         ax1.set_title('raw_signal')
@@ -108,12 +102,17 @@ def plot_graph():
         ax2.set_ylabel('Amplitude (nm)')
         ax2.grid()
 
-        # Plot on the second subplot
         ax3.plot(time, signal_minus_slope)
         ax3.set_title('sinal_without_slope')
         ax3.set_xlabel('Time (s)')
         ax3.set_ylabel('Amplitude (nm)')
         ax3.grid()
+
+        ax4.plot(frequency, power)
+        ax4.set_title('Sine Function')
+        ax4.set_xlabel('Frequency (Hz)')
+        ax4.set_ylabel('Amplitude (nm)')
+        ax4.grid()
 
         plt.show()
 
@@ -143,7 +142,7 @@ if __name__ == "__main__":
     linear_regression = lin_regression(data)
     frequency, power, time, signal, linear_function, signal_minus_slope = fft_signal(data, linear_regression[0],
                                                                                      linear_regression[1])
-    plot_graph()
+    plot_graph(frequency, power, time, signal, linear_function, signal_minus_slope)
 
     # header = file.get_header()
     # var = print(type(file.end_of_header_start_data_index))

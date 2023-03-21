@@ -6,15 +6,11 @@ import matplotlib.pyplot as plt
 
 logging.basicConfig(level=logging.DEBUG)  # Change this to logging.INFO or DEBUG to hide debug messages
 
-fn = "2023_03_07_z_very-stable_002.dat"
-df = main.NanonisLongTermDataToFFT(fn)
-
-whole_file = df.get_file()
-
 
 def raw_file(fn):
     raw_file = pd.read_csv(fn, sep="\t", decimal=".", on_bad_lines='skip', skiprows=37, low_memory=False)
     return raw_file
+
 
 def plot_graph(frequency, power, time, signal, linear_function, signal_minus_slope):
     # Check if running in debug mode
@@ -46,17 +42,21 @@ def plot_graph(frequency, power, time, signal, linear_function, signal_minus_slo
         ax4.set_xlabel('Frequency (Hz)')
         plt.xlim(0, 25)
         plt.xticks(np.arange(0, max(frequency) + 1, 1))
-        #plt.yticks(ticks=plt.yticks()[0], labels=plt.yticks()[0] * 10E9)  # multiply y-Axis by 10E9 -> now in nm
+        # plt.yticks(ticks=plt.yticks()[0], labels=plt.yticks()[0] * 10E9)  # multiply y-Axis by 10E9 -> now in nm
         ax4.set_ylabel('Amplitude (nm)')
         ax4.grid()
 
         plt.show()
 
 
-# coarse file loading
 # constants
-time_aquisition = 0.02  # change from const value, to reading from header
+fn = "2023_03_07_z_very-stable_002.dat"
 channel_to_observe = "Z (m)"
+time_aquisition = 0.02  # change from const value, to reading from header
+
+# coarse file loading
+df = main.NanonisLongTermDataToFFT(fn)
+whole_file = df.get_file()
 
 header_index = df.end_of_header_start_data_index()  # get header index
 header = df.get_header(header_index)  # get all header
